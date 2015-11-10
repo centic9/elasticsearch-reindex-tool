@@ -6,6 +6,7 @@ import com.beust.jcommander.ParameterException;
 import pl.allegro.tech.search.elasticsearch.tools.reindex.command.ReindexCommand;
 import pl.allegro.tech.search.elasticsearch.tools.reindex.connection.ElasticDataPointer;
 import pl.allegro.tech.search.elasticsearch.tools.reindex.connection.ElasticDataPointerBuilder;
+import pl.allegro.tech.search.elasticsearch.tools.reindex.connection.ElasticSearchQuery;
 import pl.allegro.tech.search.elasticsearch.tools.reindex.connection.ParsingElasticsearchAddressException;
 import pl.allegro.tech.search.elasticsearch.tools.reindex.query.QuerySegmentation;
 import pl.allegro.tech.search.elasticsearch.tools.reindex.query.QuerySegmentationFactory;
@@ -15,6 +16,7 @@ public class ReindexCommandParser {
   private ElasticDataPointer sourcePointer;
   private ElasticDataPointer targetPointer;
   private QuerySegmentation segmentation;
+  private ElasticSearchQuery query;
 
 
   public boolean tryParse(String... args) {
@@ -48,6 +50,7 @@ public class ReindexCommandParser {
         .setSniff(!command.isDisableSniff())
         .build();
     segmentation = getFieldSegmentation(command);
+    query = new ElasticSearchQuery.ElasticSearchQueryBuilder(command).build();
   }
 
   private QuerySegmentation getFieldSegmentation(ReindexCommand command) {
@@ -64,5 +67,9 @@ public class ReindexCommandParser {
 
   public QuerySegmentation getSegmentation() {
     return segmentation;
+  }
+
+  public ElasticSearchQuery getQuery() {
+    return query;
   }
 }

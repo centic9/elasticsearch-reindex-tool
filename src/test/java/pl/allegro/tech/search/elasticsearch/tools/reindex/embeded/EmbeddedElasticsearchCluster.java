@@ -12,9 +12,11 @@ import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
 
+import org.elasticsearch.search.sort.SortBuilder;
 import pl.allegro.tech.search.elasticsearch.tools.reindex.ReindexInvokerTest;
 import pl.allegro.tech.search.elasticsearch.tools.reindex.connection.ElasticDataPointer;
 import pl.allegro.tech.search.elasticsearch.tools.reindex.connection.ElasticDataPointerBuilder;
+import pl.allegro.tech.search.elasticsearch.tools.reindex.connection.ElasticSearchQuery;
 
 public final class EmbeddedElasticsearchCluster {
 
@@ -82,11 +84,10 @@ public final class EmbeddedElasticsearchCluster {
   }
 
   public ElasticDataPointer createDataPointer(String indexName) {
-    ElasticDataPointer dataPointer = ElasticDataPointerBuilder.builder()
+    return ElasticDataPointerBuilder.builder()
         .setAddress("http://127.0.0.1:" + ELS_TCP_PORT + "/" + indexName + "/" + ReindexInvokerTest.DATA_TYPE)
         .setClusterName(CLUSTER_NAME)
         .build();
-    return dataPointer;
   }
 
   public void indexWithSampleData(String sourceIndex, String type, Stream<IndexDocument> indexDocumentStream) {
@@ -108,4 +109,11 @@ public final class EmbeddedElasticsearchCluster {
         .get();
   }
 
+  public ElasticSearchQuery createInitialQuery(String query) {
+    return new ElasticSearchQuery(query);
+  }
+
+  public ElasticSearchQuery createInitialQuery(String query, SortBuilder sortOrder) {
+    return new ElasticSearchQuery(query, sortOrder);
+  }
 }
