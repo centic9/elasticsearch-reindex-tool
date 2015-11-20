@@ -4,3 +4,6 @@ build
 *.iml
 data/*
 config/*
+/bin/
+.classpath
+.project

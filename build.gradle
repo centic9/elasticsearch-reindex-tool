@@ -19,6 +19,7 @@ plugins {
 }
 
 apply plugin: 'io.codearte.nexus-staging'
+apply plugin: 'eclipse'
 
 sourceCompatibility = 1.8
 project.group = 'pl.allegro.yukon'
