@@ -1,11 +1,12 @@
 package pl.allegro.tech.search.elasticsearch.tools.reindex.process;
 
+import java.util.Optional;
+
 import org.elasticsearch.search.SearchHits;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.allegro.tech.search.elasticsearch.tools.reindex.connection.ElasticDataPointer;
 
-import java.util.Optional;
+import pl.allegro.tech.search.elasticsearch.tools.reindex.connection.ElasticDataPointer;
 
 public class IndexingProcess implements Runnable {
 
@@ -45,7 +46,7 @@ public class IndexingProcess implements Runnable {
     bulkResult.filter(bResult -> bResult.getFailedCount() > 0).ifPresent(
         bResult -> {
           processSynchronizer.incrementFailures(bResult.getFailedCount());
-          logger.warn("Failed indexing documents with ids: {}", bResult.getFailedIds());
+          logger.warn("Failed indexing documents with ids: {}", bResult.getFailedIds() + " failures: " + bResult.getFailureMessages());
         }
     );
   }

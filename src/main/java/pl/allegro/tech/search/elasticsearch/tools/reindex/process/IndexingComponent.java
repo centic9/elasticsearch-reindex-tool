@@ -1,18 +1,19 @@
 package pl.allegro.tech.search.elasticsearch.tools.reindex.process;
 
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.elasticsearch.action.bulk.BulkItemResponse;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.search.SearchHit;
-import pl.allegro.tech.search.elasticsearch.tools.reindex.connection.ElasticDataPointer;
 
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import pl.allegro.tech.search.elasticsearch.tools.reindex.connection.ElasticDataPointer;
 
 public class IndexingComponent {
 
@@ -49,7 +50,11 @@ public class IndexingComponent {
           .filter(BulkItemResponse::isFailed)
           .map(BulkItemResponse::getId)
           .collect(Collectors.toSet());
-      return Optional.of(new BulkResult(indexedCount, failedIds));
+      Set<String> failureMessages = Stream.of(bulkItemResponses.getItems())
+          .filter(BulkItemResponse::isFailed)
+          .map(BulkItemResponse::getFailureMessage)
+          .collect(Collectors.toSet());
+      return Optional.of(new BulkResult(indexedCount, failedIds, failureMessages));
     }
     return Optional.empty();
   }
