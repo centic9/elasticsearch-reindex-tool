@@ -54,6 +54,27 @@ dependencies {
     testCompile group: 'eu.codearte.catch-exception', name: 'catch-exception', version: '1.4.4'
 }
 
+// work around unnecessary timestamp in generated file which always causes dirty files in version control
+// https://issues.gradle.org/browse/GRADLE-2293
+task adjustEclipseSettingsFile << {
+   ant.replaceregexp(match:'^#.*', replace:'', flags:'g', byline:true) {
+      fileset(dir: project.projectDir, includes: '.settings/org.eclipse.jdt.core.prefs')
+   }
+}
+task sortEclipseSettingsFile << {
+   new File(project.projectDir, '.settings/org.eclipse.jdt.core.prefs').with { it.text = it.readLines().findAll { it }.sort().join('\n') }
+   new File(project.projectDir, '.classpath').with { it.text = it.readLines().findAll { it }.unique().join('\n') }
+}
+eclipseJdt.finalizedBy adjustEclipseSettingsFile
+eclipseJdt.finalizedBy sortEclipseSettingsFile
+
+tasks.withType(JavaCompile) {
+	// avoid: :compileJavawarning: [options] bootstrap class path not set in conjunction with -source 1.7
+	options.warnings = false
+	options.compilerArgs = [ '-Xlint:deprecation' ]
+    options.encoding = 'UTF-8'
+}
+
 run {
     if ( project.hasProperty("appArgs") ) {  
         args Eval.me(appArgs)  
@@ -101,5 +122,5 @@ modifyPom {
 }
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '2.7'
+  gradleVersion = '2.9'
 }

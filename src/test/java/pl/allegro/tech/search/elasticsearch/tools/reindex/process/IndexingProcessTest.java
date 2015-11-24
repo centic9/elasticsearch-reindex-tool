@@ -1,23 +1,22 @@
 package pl.allegro.tech.search.elasticsearch.tools.reindex.process;
 
-import com.beust.jcommander.internal.Lists;
-import org.elasticsearch.action.bulk.BulkRequestBuilder;
-import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.SearchHits;
-import org.junit.Test;
-import org.mockito.Mockito;
-import pl.allegro.tech.search.elasticsearch.tools.reindex.connection.ElasticDataPointer;
-import pl.allegro.tech.search.elasticsearch.tools.reindex.connection.ElasticDataPointerBuilder;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.*;
 
 import java.util.Collections;
 import java.util.Optional;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.SearchHits;
+import org.junit.Test;
+import org.mockito.Mockito;
+
+import com.beust.jcommander.internal.Lists;
+import com.google.common.collect.Sets;
+
+import pl.allegro.tech.search.elasticsearch.tools.reindex.connection.ElasticDataPointer;
+import pl.allegro.tech.search.elasticsearch.tools.reindex.connection.ElasticDataPointerBuilder;
 
 public class IndexingProcessTest {
 
@@ -52,7 +51,7 @@ public class IndexingProcessTest {
         .build();
     IndexingComponent indexingComponent = mock(IndexingComponent.class);
     when(indexingComponent.indexData(eq(dataPointer), any(SearchHit[].class)))
-        .thenReturn(Optional.of(new BulkResult(4, Collections.emptyList())));
+        .thenReturn(Optional.of(new BulkResult(4, Collections.emptyList(), Collections.emptySet())));
 
     //when
     IndexingProcess updatesProcess = IndexingProcessBuilder.builder()
@@ -76,7 +75,7 @@ public class IndexingProcessTest {
     ProcessSynchronizer processSynchronizer = buildProcessSynchronizerMock();
     IndexingComponent indexingComponent = mock(IndexingComponent.class);
     when(indexingComponent.indexData(eq(dataPointer), any(SearchHit[].class)))
-        .thenReturn(Optional.of(new BulkResult(0, Lists.newArrayList("1", "2"))));
+        .thenReturn(Optional.of(new BulkResult(0, Lists.newArrayList("1", "2"), Sets.newHashSet("fail", "other"))));
 
     //when
     IndexingProcess updatesProcess = IndexingProcessBuilder.builder()
