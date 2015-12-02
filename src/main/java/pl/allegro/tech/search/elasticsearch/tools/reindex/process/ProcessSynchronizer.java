@@ -1,19 +1,20 @@
 package pl.allegro.tech.search.elasticsearch.tools.reindex.process;
 
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.search.SearchHits;
-import org.elasticsearch.search.internal.InternalSearchHits;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import pl.allegro.tech.search.elasticsearch.tools.reindex.statistics.ProcessStatistics;
-import pl.allegro.tech.search.elasticsearch.tools.reindex.statistics.ReindexingSummary;
-
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
+
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.internal.InternalSearchHits;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import pl.allegro.tech.search.elasticsearch.tools.reindex.statistics.ProcessStatistics;
+import pl.allegro.tech.search.elasticsearch.tools.reindex.statistics.ReindexingSummary;
 
 public class ProcessSynchronizer {
 
@@ -28,7 +29,7 @@ public class ProcessSynchronizer {
   private final List<Throwable> exceptions = Collections.synchronizedList(new LinkedList<Throwable>());
 
   public ProcessSynchronizer(int querySegmentCount) {
-    this.dataQueue = new LinkedBlockingQueue(ProcessConfiguration.getInstance().getQueueSize());
+    this.dataQueue = new LinkedBlockingQueue<>(ProcessConfiguration.getInstance().getQueueSize());
     this.finishedQueringLatch = new CountDownLatch(querySegmentCount);
     this.finishedUpdatesLatch = new CountDownLatch(ProcessConfiguration.getInstance().getUpdateThreadsCount());
   }
