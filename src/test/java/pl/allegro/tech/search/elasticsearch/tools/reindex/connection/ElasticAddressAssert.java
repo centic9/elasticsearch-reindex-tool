@@ -1,8 +1,6 @@
 package pl.allegro.tech.search.elasticsearch.tools.reindex.connection;
 
-import junit.framework.TestCase;
 import org.assertj.core.api.AbstractAssert;
-import pl.allegro.tech.search.elasticsearch.tools.reindex.query.PrefixSegment;
 
 public class ElasticAddressAssert  extends AbstractAssert<ElasticAddressAssert, ElasticAddress> {
 

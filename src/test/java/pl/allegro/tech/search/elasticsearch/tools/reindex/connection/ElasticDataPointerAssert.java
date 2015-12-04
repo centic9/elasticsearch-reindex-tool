@@ -1,6 +1,5 @@
 package pl.allegro.tech.search.elasticsearch.tools.reindex.connection;
 
-import junit.framework.TestCase;
 import org.assertj.core.api.AbstractAssert;
 
 public class ElasticDataPointerAssert extends AbstractAssert<ElasticDataPointerAssert, ElasticDataPointer> {

@@ -1,18 +1,19 @@
 package pl.allegro.tech.search.elasticsearch.tools.reindex.query;
 
-import com.google.common.collect.Lists;
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import pl.allegro.tech.search.elasticsearch.tools.reindex.command.ReindexCommand;
-
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static pl.allegro.tech.search.elasticsearch.tools.reindex.query.PrefixSegmentAssert.assertThat;
 import static pl.allegro.tech.search.elasticsearch.tools.reindex.query.QuerySegmentationAssert.assertThat;
-import static pl.allegro.tech.search.elasticsearch.tools.reindex.query.RangeSegmentAssert.*;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import com.google.common.collect.Lists;
+
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
+import pl.allegro.tech.search.elasticsearch.tools.reindex.command.ReindexCommand;
 
 @RunWith(JUnitParamsRunner.class)
 public class QuerySegmentationFactoryTest {

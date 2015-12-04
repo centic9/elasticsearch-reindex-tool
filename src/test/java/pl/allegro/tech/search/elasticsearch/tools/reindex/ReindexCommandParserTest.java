@@ -1,20 +1,20 @@
 package pl.allegro.tech.search.elasticsearch.tools.reindex;
 
+import static pl.allegro.tech.search.elasticsearch.tools.reindex.connection.ElasticDataPointerAssert.assertThat;
+import static pl.allegro.tech.search.elasticsearch.tools.reindex.query.PrefixSegmentAssert.assertThat;
+import static pl.allegro.tech.search.elasticsearch.tools.reindex.query.QuerySegmentationAssert.assertThat;
+import static pl.allegro.tech.search.elasticsearch.tools.reindex.query.RangeSegmentAssert.assertThat;
+
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import org.elasticsearch.search.sort.SortOrder;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import pl.allegro.tech.search.elasticsearch.tools.reindex.connection.ElasticDataPointerAssert;
 import pl.allegro.tech.search.elasticsearch.tools.reindex.query.PrefixSegment;
 import pl.allegro.tech.search.elasticsearch.tools.reindex.query.RangeSegment;
-
 import java.util.Optional;
-
-import static pl.allegro.tech.search.elasticsearch.tools.reindex.connection.ElasticDataPointerAssert.assertThat;
-import static pl.allegro.tech.search.elasticsearch.tools.reindex.query.QuerySegmentationAssert.assertThat;
-import static pl.allegro.tech.search.elasticsearch.tools.reindex.query.RangeSegmentAssert.assertThat;
-import static pl.allegro.tech.search.elasticsearch.tools.reindex.query.PrefixSegmentAssert.assertThat;
 
 @RunWith(JUnitParamsRunner.class)
 public class ReindexCommandParserTest {

@@ -1,6 +1,5 @@
 package pl.allegro.tech.search.elasticsearch.tools.reindex.query;
 
-import junit.framework.TestCase;
 import org.assertj.core.api.AbstractAssert;
 
 public class QuerySegmentationAssert extends AbstractAssert<QuerySegmentationAssert, QuerySegmentation> {
@@ -13,6 +12,7 @@ public class QuerySegmentationAssert extends AbstractAssert<QuerySegmentationAss
     return new QuerySegmentationAssert(actual);
   }
 
+  @Override
   public QuerySegmentationAssert isInstanceOf(Class clazz) {
     isNotNull();
     if (!actual.getClass().isAssignableFrom(clazz)) {

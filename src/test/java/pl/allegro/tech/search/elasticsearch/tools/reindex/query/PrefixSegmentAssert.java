@@ -1,6 +1,5 @@
 package pl.allegro.tech.search.elasticsearch.tools.reindex.query;
 
-import junit.framework.TestCase;
 import org.assertj.core.api.AbstractAssert;
 
 public class PrefixSegmentAssert  extends AbstractAssert<PrefixSegmentAssert, PrefixSegment> {
