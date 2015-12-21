@@ -117,12 +117,12 @@ modifyPom {
     developers {
       developer {
         id 'awislowski'
-        name 'Andrzej Wisłowski'
+        name 'Andrzej Wis??owski'
       }
     }
   }
 }
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '2.9'
+  gradleVersion = '2.10'
 }
